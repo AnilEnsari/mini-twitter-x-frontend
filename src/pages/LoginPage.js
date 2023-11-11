@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import DataContext from "../store/DataContext";
 import { useHistory } from "react-router-dom";
+import LikesAnimation from "../components/LikesAnimation";
 
 const LoginPage = () => {
   const {
@@ -67,6 +68,8 @@ const LoginPage = () => {
           Sign up twitter
         </p>
       </div>
+
+      <LikesAnimation />
     </div>
   );
 };
