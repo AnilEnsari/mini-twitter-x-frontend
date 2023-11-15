@@ -3,9 +3,16 @@ import DataContext from "../store/DataContext";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
-const NewTweet = () => {
-  const { data1, setData1, loggedInUser, allTweets, setAllTweets } =
-    useContext(DataContext);
+const CommentTweet = () => {
+  const {
+    data1,
+    setData1,
+    loggedInUser,
+    allTweets,
+    setAllTweets,
+    commentTweetId,
+    setCommentTweetId,
+  } = useContext(DataContext);
   const [postText, setPostText] = useState("");
   console.log("data 1 ", data1);
   console.log("loggedInUser : ", loggedInUser);
@@ -13,7 +20,7 @@ const NewTweet = () => {
   const saveHandler = () => {
     axios
       .post(
-        `http://localhost:9000/tweet/`,
+        `http://localhost:9000/tweet/reply/${commentTweetId}`,
         {
           user: {
             id: loggedInUser.id,
@@ -33,6 +40,7 @@ const NewTweet = () => {
         getAll();
       })
       .finally(() => {
+        setCommentTweetId(0);
         setPostText("");
       });
   };
@@ -80,4 +88,4 @@ const NewTweet = () => {
   );
 };
 
-export default NewTweet;
+export default CommentTweet;

@@ -7,7 +7,7 @@ import share from "../assets/share.png";
 import statistics from "../assets/statistics.png";
 import axios from "axios";
 import NewTweet from "./NewTweet";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom";
 
 const Tweets = ({ id }) => {
   const { data1, setData1 } = useContext(DataContext);
@@ -17,6 +17,10 @@ const Tweets = ({ id }) => {
   const [activeId, setActiveId] = useState();
   const [deletedId, setDeletedId] = useState(0);
   const history = useHistory();
+
+  const goOneTweetHandler = (id) => {
+    history.push(`/tweet/${id}`);
+  };
 
   const editHandler = (data) => {
     setEdit(data?.text);
@@ -48,6 +52,7 @@ const Tweets = ({ id }) => {
   };
 
   console.log("loggedInUser : ", loggedInUser);
+
   const deleteHandler = (data) => {
     console.log("DATA : ", data);
     console.log("DELETE ID ONCE :", deletedId);
@@ -104,7 +109,6 @@ const Tweets = ({ id }) => {
 
   return (
     <div>
-      <NewTweet />
       {alertMessage ? (
         <p>{alertMessage}</p>
       ) : (
@@ -113,6 +117,7 @@ const Tweets = ({ id }) => {
           <div key={index} className="w-[72rem] mt-12 pl-4 flex">
             <div>
               <img
+                onClick={() => goOneTweetHandler(data?.tweetId)}
                 src={data?.userTweetResponse?.profilePicture}
                 alt="profile-pic"
                 className="h-[4rem] w-[4rem] rounded-full"
@@ -155,10 +160,12 @@ const Tweets = ({ id }) => {
                 </div>
                 <img src={share} alt="share" />
                 <img src={statistics} alt="statistics" />
-                <button id={data?.tweetId} onClick={() => editHandler(data)}>
-                  {" "}
-                  EDIT{" "}
-                </button>
+                {data.userTweetResponse.id === loggedInUser.id && (
+                  <button id={data?.tweetId} onClick={() => editHandler(data)}>
+                    {" "}
+                    EDIT{" "}
+                  </button>
+                )}
                 {data?.tweetId === activeId ? (
                   <button id={data?.tweetId} onClick={() => saveHandler()}>
                     {" "}
@@ -167,7 +174,9 @@ const Tweets = ({ id }) => {
                 ) : (
                   ""
                 )}
-                <button onClick={() => deleteHandler(data)}> DELETE </button>
+                {data.userTweetResponse.id === loggedInUser.id && (
+                  <button onClick={() => deleteHandler(data)}> DELETE </button>
+                )}
               </div>
             </div>
           </div>

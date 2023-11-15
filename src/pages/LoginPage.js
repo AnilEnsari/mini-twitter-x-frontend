@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import twitterLogo from "../assets/twitter-logo.png";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import DataContext from "../store/DataContext";
 import { useHistory } from "react-router-dom";
 import LikesAnimation from "../components/LikesAnimation";
+import Signup from "./Signup";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   const {
@@ -14,6 +16,7 @@ const LoginPage = () => {
   } = useForm();
   const { loggedInUser, setLoggedInUser } = useContext(DataContext);
   const history = useHistory();
+  const [storedUser, setStoredUser] = useState("");
 
   const onSubmit = (loginData) => {
     axios
@@ -21,6 +24,8 @@ const LoginPage = () => {
       .then((response) => {
         setLoggedInUser(response.data);
         console.log("response.data : : ", response.data);
+        localStorage.setItem("loggedInUser", JSON.stringify(response.data));
+        console.log("LOGIN DAHA KAYDETMEK ICIN ", loggedInUser);
         history.push(`/homepage/${response.data.id}`);
         console.log("GİRDİM");
       })
@@ -30,6 +35,24 @@ const LoginPage = () => {
       });
   };
 
+  if (storedUser) {
+    const storedLoginData = { email: storedUser.email, password: "123" };
+
+    axios
+      .post("http://localhost:9000/profile/login", storedLoginData)
+      .then((response) => {
+        setLoggedInUser(response.data);
+        history.push(`/homepage/${response.data.id}`);
+      })
+      .catch((e) => {
+        console.log("Automatic login failed:", e.message);
+      });
+  }
+
+  useEffect(() => {
+    setStoredUser(JSON.parse(localStorage?.getItem("loggedInUser")));
+    setLoggedInUser(JSON.parse(localStorage?.getItem("loggedInUser")));
+  }, []);
   return (
     <div className="w-[30rem] mx-auto">
       <img
@@ -64,9 +87,11 @@ const LoginPage = () => {
         <p className="text-[#1DA1F2] font-semibold cursor-pointer">
           Forgot password?
         </p>
-        <p className="text-[#1DA1F2] font-semibold cursor-pointer">
-          Sign up twitter
-        </p>
+        <Link to={"/register"}>
+          <p className="text-[#1DA1F2] font-semibold cursor-pointer">
+            Sign up twitter
+          </p>
+        </Link>
       </div>
 
       <LikesAnimation />

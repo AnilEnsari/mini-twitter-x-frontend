@@ -4,6 +4,7 @@ import NewTweet from "../components/NewTweet";
 import DataContext from "../store/DataContext";
 import { useParams } from "react-router-dom";
 import Homepagetweets from "../components/Homepagetweets";
+import { NavbarRight } from "../layout/NavbarRight";
 
 const HomePage = () => {
   const { data1, setData1, loggedInUser } = useContext(DataContext);
@@ -13,6 +14,7 @@ const HomePage = () => {
     <div className="flex">
       <Navbar />
       <Homepagetweets id={id} />
+      <NavbarRight />
     </div>
   );
 };

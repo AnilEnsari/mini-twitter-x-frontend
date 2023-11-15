@@ -11,51 +11,45 @@ import retweet from "../assets/retweet.png";
 import likes from "../assets/likes.png";
 import share from "../assets/share.png";
 
-const OnlyOneTweetPage = () => {
-  const { id } = useParams();
-  const { data1, setData1 } = useContext(DataContext);
+const NewCommentTweet = ({ comId }) => {
   const [data, setData] = useState("");
-  const { loggedInUser, setLoggedInUser } = useContext(DataContext);
+  const {
+    loggedInUser,
+    setLoggedInUser,
+    data1,
+    setData1,
+    allTweets,
+    setAllTweets,
+    setCommentTweetId,
+  } = useContext(DataContext);
   const [alertMessage, setAlertMessage] = useState("");
   const [edit, setEdit] = useState("");
   const [activeId, setActiveId] = useState();
   const [deletedId, setDeletedId] = useState(0);
-  const history = useHistory();
 
-  // const goOneTweetHandler = (id) => {
-  //     history.push(`/tweet/${id}`)
-  // }
-  console.log("onyle one twer qwe", data);
   const deleteHandler = (deletedData) => {
-    console.log("DATA : ", deletedData);
-    console.log("DELETE ID ONCE :", deletedId);
     setDeletedId(deletedData?.tweetId);
-    console.log("DELETE ID SONRA :", deletedId);
     setActiveId(0);
   };
 
   const saveHandler = () => {
-    axios
-      .post(
-        `http://localhost:9000/tweet/`,
-        {
-          user: {
-            id: loggedInUser.id,
-          },
-          text: edit,
-          tweetDate: "2023-11-06",
-          id: activeId,
+    axios.post(
+      `http://localhost:9000/tweet/`,
+      {
+        user: {
+          id: loggedInUser.id,
         },
-        {
-          auth: {
-            username: loggedInUser.email,
-            password: "123",
-          },
-        }
-      )
-      .then((response) => {
-        setData1([...data1, response.data]);
-      });
+        text: edit,
+        tweetDate: "2023-11-06",
+        id: activeId,
+      },
+      {
+        auth: {
+          username: loggedInUser.email,
+          password: "123",
+        },
+      }
+    );
   };
   const editHandler = (data) => {
     setEdit(data?.text);
@@ -65,33 +59,24 @@ const OnlyOneTweetPage = () => {
   useEffect(() => {
     if (deletedId !== 0) {
       axios
-        .delete(`http://localhost:9000/tweet/${deletedId}`, {
+        .delete(`http://localhost:9000/tweet/reply/${deletedId}`, {
           auth: {
             username: loggedInUser.email,
             password: "123",
           },
         })
-        .then(
-          axios
-            .get(`http://localhost:9000/tweet/profile/${id}`, {
-              auth: {
-                username: loggedInUser.email,
-                password: "123",
-              },
-            })
-            .then((response) => {
-              setData1(response.data);
-              console.log(response.data);
-              setDeletedId(0);
-            })
-            .catch((error) => {
-              console.log(error.response.data.message);
-              setAlertMessage(error.response.data.message);
-            })
-        );
+        .then((response) => {
+          console.log("response", response);
+          setAllTweets(
+            allTweets?.length > 0
+              ? allTweets.filter((e) => e.tweetId !== response.data.tweetId)
+              : null
+          );
+          setCommentTweetId("");
+        });
     }
     axios
-      .get(`http://localhost:9000/tweet/${id}`, {
+      .get(`http://localhost:9000/tweet/${comId}`, {
         auth: {
           username: loggedInUser["email"],
           password: "123",
@@ -103,19 +88,16 @@ const OnlyOneTweetPage = () => {
       })
       .catch((error) => {
         console.log("CATHE DUSTU");
-        console.log(error.response.data.message);
-        setAlertMessage(error.response.data.message);
+        console.log(error.message);
+        setAlertMessage(error.message);
       });
-  }, [deletedId]);
+  }, [deletedId, comId]);
 
   return (
     <div className="flex justify-between p-8">
-      <Navbar />
       <div>
         <div>
-          {alertMessage ? (
-            <p>{alertMessage}</p>
-          ) : (
+          {alertMessage ? null : (
             <div className="w-[72rem] mt-12 pl-4 flex">
               <div>
                 <img
@@ -190,9 +172,8 @@ const OnlyOneTweetPage = () => {
           )}
         </div>
       </div>
-      <NavbarRight />
     </div>
   );
 };
 
-export default OnlyOneTweetPage;
+export default NewCommentTweet;

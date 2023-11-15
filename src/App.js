@@ -34,7 +34,7 @@ function App() {
         </Route>
 
         <Route path="*">
-          <Form />
+          <LoginPage />
         </Route>
       </Switch>
     </div>

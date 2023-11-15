@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import frame14 from "../assets/frame14.png";
 import frame15 from "../assets/frame15.png";
+import DataContext from "../store/DataContext";
 
 export const NavbarRight = () => {
+  const { data1, setData1, loggedInUser } = useContext(DataContext);
+
   return (
-    <div className="w-[21rem]">
+    <div className="w-[50rem]">
       <input className="w-[21rem] my-5" placeholder="Search Twitter" />
       <div>
         <img src={frame14} alt="frame14" />
