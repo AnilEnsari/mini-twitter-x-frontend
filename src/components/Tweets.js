@@ -114,7 +114,7 @@ const Tweets = ({ id }) => {
       ) : (
         data1.length > 0 &&
         data1.map((data, index) => (
-          <div key={index} className="w-[72rem] mt-12 pl-4 flex">
+          <div key={index} className="w-[48] mr-24 mt-12 pl-4 flex">
             <div>
               <img
                 onClick={() => goOneTweetHandler(data?.tweetId)}
@@ -151,11 +151,14 @@ const Tweets = ({ id }) => {
               <div className="flex gap-4 mt-4">
                 <img src={comment} alt="comment" />
                 <div className="flex gap-1">
-                  <img src={retweet} alt="retweet" />
+                  <img
+                    src="https://file.rendit.io/n/STwpuiuwPmCkjEtyn2qO.svg"
+                    alt="retweet"
+                  />
                   <p>{data?.retweet}</p>
                 </div>
                 <div className="flex gap-1">
-                  <img src={likes} alt="likes" />
+                  <p>🤍</p>
                   <p>{data?.likes}</p>
                 </div>
                 <img src={share} alt="share" />
