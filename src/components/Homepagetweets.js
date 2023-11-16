@@ -284,14 +284,14 @@ const Homepagetweets = ({ id }) => {
   }, []);
 
   return (
-    <div>
+    <div className="ml-72">
       <NewTweet />
       {alertMessage ? (
         <p>{alertMessage}</p>
       ) : (
         allTweets.length > 0 &&
         allTweets?.map((data, index) => (
-          <div key={index} className="w-[72rem] mt-12 pl-4 flex">
+          <div key={index} className="w-[48rem] mt-12 pl-4 flex">
             <div>
               <img
                 onClick={() => goOneTweetHandler(data?.tweetId)}
@@ -391,7 +391,6 @@ const Homepagetweets = ({ id }) => {
                 data.commentsTweetIdList.map((comment) => (
                   <div>
                     <NewCommentTweet comId={comment} />
-                    {/* BURASI DUZELTILECEK KISIMDI AXOIS VS .... */}
                   </div>
                 ))}
             </div>

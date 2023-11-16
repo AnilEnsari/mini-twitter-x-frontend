@@ -12,7 +12,7 @@ export default function Form() {
     formState: { errors },
   } = useForm();
   const history = useHistory();
-  const date = "2023-11-06";
+  const date = "2023-11-16";
 
   const onSubmit = (registerData) => {
     registerData["registerDate"] = date;

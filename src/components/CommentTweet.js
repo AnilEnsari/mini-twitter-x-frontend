@@ -1,14 +1,12 @@
 import React, { useContext, useState } from "react";
 import DataContext from "../store/DataContext";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 
 const CommentTweet = () => {
   const {
     data1,
     setData1,
     loggedInUser,
-    allTweets,
     setAllTweets,
     commentTweetId,
     setCommentTweetId,

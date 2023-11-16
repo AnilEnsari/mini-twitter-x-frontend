@@ -8,7 +8,6 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import comment from "../assets/comment.png";
 import retweet from "../assets/retweet.png";
-import likes from "../assets/likes.png";
 import share from "../assets/share.png";
 
 const OnlyOneTweetPage = () => {
@@ -156,7 +155,7 @@ const OnlyOneTweetPage = () => {
                     <p>{data?.retweet}</p>
                   </div>
                   <div className="flex gap-1">
-                    <img src={likes} alt="likes" />
+                    <p>🤍</p>
                     <p>{data?.likes}</p>
                   </div>
                   <img src={share} alt="share" />

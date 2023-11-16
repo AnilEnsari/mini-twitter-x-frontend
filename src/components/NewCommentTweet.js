@@ -134,11 +134,14 @@ const NewCommentTweet = ({ comId }) => {
                 <div className="flex gap-4 mt-4">
                   <img src={comment} alt="comment" />
                   <div className="flex gap-1">
-                    <img src={retweet} alt="retweet" />
+                    <img
+                      src={"https://file.rendit.io/n/STwpuiuwPmCkjEtyn2qO.svg"}
+                      alt="retweet"
+                    />
                     <p>{data?.retweet}</p>
                   </div>
                   <div className="flex gap-1">
-                    <img src={likes} alt="likes" />
+                    <p>🤍</p>
                     <p>{data?.likes}</p>
                   </div>
                   <img src={share} alt="share" />

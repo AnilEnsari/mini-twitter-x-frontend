@@ -8,7 +8,6 @@ import bookmarks from "../assets/bookmarks.png";
 import lists from "../assets/lists.png";
 import profileblack from "../assets/profileblack.png";
 import more from "../assets/more.png";
-import picbobur from "../assets/ornekboburpic.png";
 import DataContext from "../store/DataContext";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
@@ -24,7 +23,6 @@ export default function Navbar() {
     history.push("/login");
   };
 
-  //NAVBAR DUZELT SOLDAN ORTALA ---
   return (
     <div className="w-[50rem] mt-20">
       <img

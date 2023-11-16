@@ -19,7 +19,7 @@ const NewTweet = () => {
             id: loggedInUser.id,
           },
           text: postText,
-          tweetDate: "2023-11-06",
+          tweetDate: "2023-11-16",
         },
         {
           auth: {
