@@ -307,7 +307,7 @@ const Homepagetweets = ({ id }) => {
                   {data?.userTweetResponse?.firstName}
                 </h1>
                 <p className="font-light">
-                  @{data?.userTweetResponse?.userName}{" "}
+                  @{data?.userTweetResponse?.lastName}{" "}
                   <span>{data?.tweetDate}</span>
                 </p>
               </div>
